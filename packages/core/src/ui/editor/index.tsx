@@ -16,6 +16,7 @@ import { ImageResizer } from "./extensions/image-resizer";
 import { EditorProps } from "@tiptap/pm/view";
 import { Editor as EditorClass, Extensions } from "@tiptap/core";
 import { NovelContext } from "./provider";
+import { AUTO_COMPLETE_KEY } from "@/constants";
 
 export default function Editor({
   completionApi = "/api/generate",
@@ -106,7 +107,7 @@ export default function Editor({
       const lastTwo = getPrevText(e.editor, {
         chars: 2,
       });
-      if (lastTwo === "++" && !isLoading) {
+      if (lastTwo === AUTO_COMPLETE_KEY && !isLoading) {
         e.editor.commands.deleteRange({
           from: selection.from - 2,
           to: selection.from,
@@ -154,7 +155,7 @@ export default function Editor({
 
   useEffect(() => {
     // if user presses escape or cmd + z and it's loading,
-    // stop the request, delete the completion, and insert back the "++"
+    // stop the request, delete the completion, and insert back the AUTO_COMPLETE_KEY
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" || (e.metaKey && e.key === "z")) {
         stop();
@@ -164,7 +165,7 @@ export default function Editor({
             to: editor.state.selection.from,
           });
         }
-        editor?.commands.insertContent("++");
+        editor?.commands.insertContent(AUTO_COMPLETE_KEY);
       }
     };
     const mousedownHandler = (e: MouseEvent) => {

@@ -16,6 +16,7 @@ import UploadImagesPlugin from "@/ui/editor/plugins/upload-images";
 import UpdatedImage from "./updated-image";
 import CustomKeymap from "./custom-keymap";
 import DragAndDrop from "./drag-and-drop";
+import { AUTO_COMPLETE_KEY } from "@/constants";
 
 export const defaultExtensions = [
   StarterKit.configure({
@@ -112,7 +113,7 @@ export const defaultExtensions = [
       if (node.type.name === "heading") {
         return `Heading ${node.attrs.level}`;
       }
-      return "Press '/' for commands, or '++' for AI autocomplete...";
+      return `Press '/' for commands, or Tab for AI autocomplete...`;
     },
     includeChildren: true,
   }),

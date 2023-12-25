@@ -1,3 +1,5 @@
+import { AUTO_COMPLETE_KEY } from "@/constants";
+
 export const defaultEditorContent = {
   type: "doc",
   content: [
@@ -112,7 +114,7 @@ export const defaultEditorContent = {
               type: "paragraph",
               content: [
                 { type: "text", text: "AI autocomplete (type " },
-                { type: "text", marks: [{ type: "code" }], text: "++" },
+                { type: "text", marks: [{ type: "code" }], text: AUTO_COMPLETE_KEY },
                 {
                   type: "text",
                   text: " to activate, or select from slash menu)",
