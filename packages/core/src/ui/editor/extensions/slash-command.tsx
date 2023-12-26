@@ -293,7 +293,7 @@ const CommandList = ({
         if (item.title === "Continue writing") {
           if (isLoading) return;
           complete(
-            getPrevText(editor, {
+            getPrevText(editor.state, {
               chars: 5000,
               offset: 1,
             })

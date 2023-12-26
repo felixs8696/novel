@@ -113,7 +113,7 @@ export const defaultExtensions = [
       if (node.type.name === "heading") {
         return `Heading ${node.attrs.level}`;
       }
-      return `Press '/' for commands, or Tab for AI autocomplete...`;
+      return `Press '/' for commands, or ${AUTO_COMPLETE_KEY} for AI autocomplete...`;
     },
     includeChildren: true,
   }),

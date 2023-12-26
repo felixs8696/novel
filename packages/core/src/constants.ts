@@ -1,1 +1,1 @@
-export const AUTO_COMPLETE_KEY = "++"
+export const AUTO_COMPLETE_KEY = "Tab";

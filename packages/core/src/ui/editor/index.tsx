@@ -13,7 +13,7 @@ import { defaultEditorContent } from "./default-content";
 import { EditorBubbleMenu } from "./bubble-menu";
 import { getPrevText } from "@/lib/editor";
 import { ImageResizer } from "./extensions/image-resizer";
-import { EditorProps } from "@tiptap/pm/view";
+import { EditorProps, EditorView } from "@tiptap/pm/view";
 import { Editor as EditorClass, Extensions } from "@tiptap/core";
 import { NovelContext } from "./provider";
 import { AUTO_COMPLETE_KEY } from "@/constants";
@@ -101,31 +101,25 @@ export default function Editor({
     editorProps: {
       ...defaultEditorProps,
       ...editorProps,
+      handleKeyDown: (view: EditorView, e: KeyboardEvent) => {
+        if (e.key === AUTO_COMPLETE_KEY && !isLoading) {
+            complete(
+              getPrevText(view.state, {
+                chars: 5000,
+              })
+            );
+            // complete(e.editor.storage.markdown.getMarkdown());
+            va.track("Autocomplete Shortcut Used");
+          }
+      },
     },
     onUpdate: (e) => {
-      const selection = e.editor.state.selection;
-      const lastTwo = getPrevText(e.editor, {
-        chars: 2,
-      });
-      if (lastTwo === AUTO_COMPLETE_KEY && !isLoading) {
-        e.editor.commands.deleteRange({
-          from: selection.from - 2,
-          to: selection.from,
-        });
-        complete(
-          getPrevText(e.editor, {
-            chars: 5000,
-          })
-        );
-        // complete(e.editor.storage.markdown.getMarkdown());
-        va.track("Autocomplete Shortcut Used");
-      } else {
-        onUpdate(e.editor);
-        debouncedUpdates(e);
-      }
+      onUpdate(e.editor);
+      debouncedUpdates(e);
     },
     autofocus: "end",
   });
+
 
   const { complete, completion, isLoading, stop } = useCompletion({
     id: "novel",
